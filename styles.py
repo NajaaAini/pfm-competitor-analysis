@@ -38,6 +38,7 @@ def apply_global_styles():
     <style>
 
     @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
 
     /* =========================================================
        GLOBAL
@@ -81,6 +82,14 @@ def apply_global_styles():
         background: {CARD} !important;
         border-right: 3px solid {YELLOW} !important;
         box-shadow: 4px 0 18px rgba(0,0,0,0.05);
+    }}
+
+    /* Material Symbols font (Streamlit's icon font) */
+    [data-testid="stIconMaterial"],
+    .material-symbols-rounded,
+    .material-symbols-outlined,
+    span[translate="no"] {{
+        font-family: "Material Symbols Rounded", "Material Symbols Outlined", sans-serif !important;
     }}
 
     [data-testid="stSidebar"] [data-testid="stSidebarHeader"] {{
