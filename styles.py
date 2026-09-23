@@ -84,6 +84,14 @@ def apply_global_styles():
         box-shadow: 4px 0 18px rgba(0,0,0,0.05);
     }}
 
+    /* Jangan override font icon Streamlit */
+    [data-testid="stIconMaterial"],
+    .material-symbols-rounded,
+    .material-symbols-outlined,
+    span[translate="no"] {
+        font-family: 'Material Symbols Rounded', 'Material Symbols Outlined', sans-serif !important;
+    }
+
     [data-testid="stSidebar"] [data-testid="stSidebarHeader"] {{
         padding-top: 0.5rem !important;
         padding-bottom: 0.5rem !important;
