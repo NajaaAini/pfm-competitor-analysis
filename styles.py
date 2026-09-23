@@ -10,21 +10,20 @@ from pathlib import Path
 # DESIGN TOKENS
 # ============================================================
 
-YELLOW        = "#F2B705"   # primary accent
-YELLOW_DARK   = "#D99400"   # hover / darker accent
-INK           = "#292929"   # primary text
-INK_MUTED     = "#666666"   # secondary text
-INK_SOFT      = "#777777"   # captions
-BG            = "#FFFDF7"   # page background
-CARD          = "#FFFFFF"   # card / sidebar background
-BORDER        = "#E7DFC9"   # borders
+YELLOW        = "#F2B705"
+YELLOW_DARK   = "#D99400"
+INK           = "#292929"
+INK_MUTED     = "#666666"
+INK_SOFT      = "#777777"
+BG            = "#FFFDF7"
+CARD          = "#FFFFFF"
+BORDER        = "#E7DFC9"
 POSITIVE      = "#4C8C5A"
 NEUTRAL       = "#D99A00"
 NEGATIVE      = "#C75B39"
 
 LOGO_FILE     = "images (1).jpg"
 
-# Fixed minimum word length for word clouds
 DEFAULT_MIN_WORDS = 4
 
 
@@ -84,14 +83,6 @@ def apply_global_styles():
         box-shadow: 4px 0 18px rgba(0,0,0,0.05);
     }}
 
-    /* Jangan override font icon Streamlit */
-    [data-testid="stIconMaterial"],
-    .material-symbols-rounded,
-    .material-symbols-outlined,
-    span[translate="no"] {
-        font-family: 'Material Symbols Rounded', 'Material Symbols Outlined', sans-serif !important;
-    }
-
     [data-testid="stSidebar"] [data-testid="stSidebarHeader"] {{
         padding-top: 0.5rem !important;
         padding-bottom: 0.5rem !important;
@@ -118,7 +109,6 @@ def apply_global_styles():
         font-family: "Poppins", Arial, sans-serif !important;
     }}
 
-    /* Sidebar navigation radio */
     .stRadio > div {{ gap: 8px !important; }}
 
     .stRadio div[role="radiogroup"] label {{
@@ -140,7 +130,6 @@ def apply_global_styles():
         font-weight: 600 !important;
     }}
 
-    /* Sidebar selectbox */
     [data-testid="stSidebar"] div[data-baseweb="select"] {{
         background-color: {BG} !important;
         border: 1px solid {BORDER} !important;
@@ -158,7 +147,7 @@ def apply_global_styles():
 
 
     /* =========================================================
-       CUSTOM PAGE LINKS (st.page_link) — button style
+       CUSTOM PAGE LINKS (st.page_link)
     ========================================================= */
 
     [data-testid="stSidebar"] [data-testid="stPageLink-NavLink"] {{
@@ -193,7 +182,6 @@ def apply_global_styles():
         width: 100% !important;
     }}
 
-    /* Hide any icon next to the page_link label */
     [data-testid="stSidebar"] [data-testid="stPageLink-NavLink"] svg,
     [data-testid="stSidebar"] [data-testid="stPageLink-NavLink"] img,
     [data-testid="stSidebar"] [data-testid="stPageLink-NavLink"] > span:first-child:not(:last-child) {{
@@ -202,7 +190,7 @@ def apply_global_styles():
 
 
     /* =========================================================
-       ACTIVE NAV BUTTON (rendered as HTML div, not page_link)
+       ACTIVE NAV BUTTON
     ========================================================= */
 
     .pfm-nav-active {{
@@ -426,18 +414,6 @@ def render_sidebar(
     """
     Render the standard sidebar used across all pages.
     Brand at top, custom navigation below it, filters at the bottom.
-
-    Parameters
-    ----------
-    current_page : str
-        One of: "homepage", "comparison", "detail_review",
-        "overview_places", "pfm_analysis".
-        Used to highlight the active nav button.
-
-    Returns
-    -------
-    dict with keys:
-        attraction, rating_filter, sentiment_filter, min_words, max_words
     """
 
     result = {
@@ -451,7 +427,6 @@ def render_sidebar(
     base_dir = Path(__file__).resolve().parent
     logo_path = base_dir / LOGO_FILE
 
-    # ---------- NAV ITEMS ----------
     nav_items = [
         ("homepage",        "homepage.py",              "HOMEPAGE"),
         ("comparison",      "pages/comparison.py",      "COMPARISON"),
@@ -462,10 +437,7 @@ def render_sidebar(
 
     with st.sidebar:
 
-        # ====================================================
-        # BRAND — TOP OF SIDEBAR
-        # ====================================================
-
+        # ---------- BRAND ----------
         col1, col2, col3 = st.columns([1, 2, 1])
         with col2:
             if logo_path.exists():
@@ -514,17 +486,10 @@ def render_sidebar(
             unsafe_allow_html=True,
         )
 
-        # ====================================================
-        # CUSTOM NAVIGATION
-        # Active page → yellow HTML div (not clickable)
-        # Other pages → st.page_link (clickable)
-        # ====================================================
-
+        # ---------- NAVIGATION ----------
         for key, path, label in nav_items:
 
             if key == current_page:
-
-                # ---- ACTIVE: yellow button ----
                 st.markdown(
                     f"""
                     <div class="pfm-nav-active">
@@ -533,16 +498,10 @@ def render_sidebar(
                     """,
                     unsafe_allow_html=True,
                 )
-
             else:
-
-                # ---- INACTIVE: clickable page_link ----
                 st.page_link(path, label=label)
 
-        # ====================================================
-        # ATTRACTION SELECTOR
-        # ====================================================
-
+        # ---------- ATTRACTION SELECTOR ----------
         if show_attraction_selector and attraction_options:
             st.markdown("---")
             st.markdown(
@@ -566,10 +525,7 @@ def render_sidebar(
                 key="sidebar_attraction",
             )
 
-        # ====================================================
-        # EXTRA FILTERS
-        # ====================================================
-
+        # ---------- EXTRA FILTERS ----------
         if show_extra_filters:
             st.markdown("---")
             st.markdown(
