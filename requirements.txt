@@ -1,0 +1,13 @@
+streamlit
+pandas
+numpy
+openpyxl
+altair
+folium
+streamlit-folium
+geopy
+streamlit-geolocation
+nltk
+wordcloud
+matplotlib
+scikit-learn
